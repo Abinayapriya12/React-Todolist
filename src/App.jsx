@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./App.css";
 
 function App() {
   const [task, setTask] = useState("");
@@ -17,32 +18,37 @@ function App() {
   };
 
   return (
+    <div className="todo-container">
+      <h2 className="todo-title">📝 Todo List</h2>
 
-    <div style={{ padding: "20px", maxWidth: "300px" }}>
-      <h2>Todo List</h2>
+      <div className="todo-input-group">
+        <input
+          type="text"
+          placeholder="What needs to be done?"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          className="todo-input"
+          onKeyPress={(e) => e.key === "Enter" && addTask()}
+        />
+        <button className="add-btn" onClick={addTask}>
+          Add
+        </button>
+      </div>
 
-      <input
-        type="text"
-        placeholder="Enter task"
-        value={task}
-        onChange={(e) => setTask(e.target.value)}
-      />
-
-      <button onClick={addTask}>Add</button>
-
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index}>
-            {todo}
-            <button
-              style={{ marginLeft: "10px" }}
-              onClick={() => deleteTask(index)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      {todos.length === 0 ? (
+        <p className="empty-message">✨ No tasks yet.</p>
+      ) : (
+        <ul className="todo-list">
+          {todos.map((todo, index) => (
+            <li key={index} className="todo-item">
+              <span className="todo-text">{todo}</span>
+              <button className="delete-btn" onClick={() => deleteTask(index)}>
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
